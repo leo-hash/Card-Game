@@ -11,7 +11,6 @@ class Player:
             self.hand = []
 
 
-
     def play_card(self, card: Card)->Card:
         if not self.hand.__contains__(card):
             raise ValueError(f"Card {card} not in hand")

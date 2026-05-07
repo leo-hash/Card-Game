@@ -1,10 +1,10 @@
+from src.cards import Card, Rank
 from src.maumau import GameBoard
 from src.maumau import PlayerMauMau
 import random
 
 from src.maumau.agent import Agent
 from src.maumau.game_config import GameConfig, GameboardConfig, PlayerConfig
-
 
 
 class GameEngine:
@@ -47,8 +47,38 @@ class GameEngine:
         self.gameboard.setup_last_card()
 
     def play_turn(self):
-        cur_agent = self.agents[self.gameboard.current_player.name]
+        cur_agent = self.agents[self.gameboard.curr_player.name]
         card_to_play = cur_agent.choose_card(self.gameboard)
+
+        # if card_to_play == null, then draw a card
+        if card_to_play is None:
+            pass
+        else:
+            # if card_to_play legal move, play
+            top_card = self.gameboard.show_last_card()
+            if card_to_play.suit == top_card.suit or card_to_play.rank == top_card.rank:
+                self.gameboard.play_card(card_to_play)
+                self.apply_card_effect(card_to_play)
+                self.gameboard.move_to_next_player()
+
+            else:
+                # TODO: illegal move
+                # try again, raise error or tell agent somehow ...
+                pass
+
+    def apply_card_effect(self, card: Card):
+        # 7: draw two, without multiple 7 in a row
+        if card.rank is Rank.SEVEN:
+            self.gameboard.deal_cards(2, self.gameboard.next_player())
+
+        # 8: suspend next player
+        if card.rank is Rank.EIGHT:
+            self.gameboard.move_to_next_player()
+
+        # Jack: choose a color
+        if card.rank is Rank.JACK:
+            # TODO: implement jack
+            pass
 
 
     def end_game(self):
