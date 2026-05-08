@@ -11,5 +11,13 @@ if __name__ == '__main__':
         ]
     )
 
-
     game_engine = GameEngine(game_config)
+
+    game_round = 1
+    while True:
+        print(f"Round {game_round}")
+        game_engine.play_turn()
+        game_round += 1
+
+        if game_round >= 25:
+            break

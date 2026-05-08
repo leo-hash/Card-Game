@@ -34,45 +34,27 @@ class GameEngine:
 
     def _setup_game(self, start_player_index: int=None, card_count: int = 6):
         if start_player_index is None:
-            self.gameboard.current_player = random.choice(self.players)
+            self.gameboard.curr_player = random.choice(self.players)
         else:
             if start_player_index < 0 or start_player_index >= len(self.players):
                 raise ValueError("Invalid start_player index")
             else:
-                self.gameboard.current_player = self.players[start_player_index]
+                self.gameboard.curr_player = self.players[start_player_index]
 
         for player in self.players:
             self.gameboard.deal_cards(amount=card_count, player=player)
 
         self.gameboard.setup_last_card()
 
-    def play_turn(self):
-        cur_agent = self.agents[self.gameboard.curr_player.name]
-        card_to_play = cur_agent.choose_card(self.gameboard)
-
-        # if card_to_play == null, then draw a card
-        if card_to_play is None:
-            pass
-        else:
-            # if card_to_play legal move, play
-            top_card = self.gameboard.show_last_card()
-            if card_to_play.suit == top_card.suit or card_to_play.rank == top_card.rank:
-                self.gameboard.play_card(card_to_play)
-                self.apply_card_effect(card_to_play)
-                self.gameboard.move_to_next_player()
-
-            else:
-                # TODO: illegal move
-                # try again, raise error or tell agent somehow ...
-                pass
-
-    def apply_card_effect(self, card: Card):
+    def _apply_card_effect(self, card: Card):
         # 7: draw two, without multiple 7 in a row
         if card.rank is Rank.SEVEN:
+            print(f"Player {self.gameboard.next_player().name} has to draw 2 cards")
             self.gameboard.deal_cards(2, self.gameboard.next_player())
 
         # 8: suspend next player
         if card.rank is Rank.EIGHT:
+            print(f"Player {self.gameboard.next_player().name} is suspended for this round")
             self.gameboard.move_to_next_player()
 
         # Jack: choose a color
@@ -80,8 +62,33 @@ class GameEngine:
             # TODO: implement jack
             pass
 
+    def play_turn(self):
+        cur_agent = self.agents[self.gameboard.curr_player.name]
+        card_to_play = cur_agent.choose_card(self.gameboard)
+
+        # if card_to_play == null, then draw a card
+        if card_to_play is None:
+            print(f"Player {self.gameboard.curr_player.name} has to draw a card")
+            self.gameboard.deal_cards(1, self.gameboard.curr_player)
+        else:
+            # if card_to_play legal move, play
+            top_card = self.gameboard.show_last_card()
+            if (card_to_play.suit == top_card.suit or
+                    card_to_play.rank == top_card.rank):
+                print(f"Player {self.gameboard.curr_player.name} played {card_to_play}")
+                self.gameboard.play_card(card_to_play)
+                self._apply_card_effect(card_to_play)
+                if self.gameboard.check_player_wins():
+                    self.end_game()
+                self.gameboard.move_to_next_player()
+
+            else:
+                # illegal move
+                print(f"Player {self.gameboard.curr_player.name} made illegal move, try again")
+                self.play_turn()
+
 
     def end_game(self):
-        pass
+        exit()
 
 
