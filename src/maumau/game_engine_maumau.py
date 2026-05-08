@@ -76,6 +76,7 @@ class GameEngine:
             if (card_to_play.suit == top_card.suit or
                     card_to_play.rank == top_card.rank):
                 print(f"Player {self.gameboard.curr_player.name} played {card_to_play}")
+
                 self.gameboard.play_card(card_to_play)
                 self._apply_card_effect(card_to_play)
                 if self.gameboard.check_player_wins():

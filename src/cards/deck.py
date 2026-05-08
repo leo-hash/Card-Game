@@ -23,9 +23,9 @@ class Deck:
                 if (not self.big_deck) and (rank.value < 7):
                     continue
 
-                self.add_card(Card(suit, rank, self.big_deck))
+                self.add_card(Card(suit, rank))
                 if self.double_deck:
-                    self.cards.append(Card(suit, rank, self.big_deck))
+                    self.cards.append(Card(suit, rank))
 
     def add_card(self, card: Card=None, card_list: list[Card] = None):
         if card is None and card_list is None:
@@ -35,27 +35,21 @@ class Deck:
             raise ValueError("Too many arguments, either a card or a list of cards is required")
 
         if card is not None:
-            if not card.big_deck == self.big_deck:
+            if not self.big_deck and card.rank.value < 7:
                 raise ValueError("Deck type not allowed, card.big_deck must be equal to deck.big_deck ")
-            # skip rank 2 to 6 if small deck
-            if self.big_deck or card.rank.value >= 7:
-                self.cards.append(card)
+            self.cards.append(card)
 
         else:
             for card in card_list:
-                if not card.big_deck == self.big_deck:
+                if not self.big_deck and card.rank.value < 7:
                     raise ValueError("Deck type not allowed, card.big_deck must be equal to deck.big_deck ")
-                if self.big_deck or card.rank.value >= 7:
-                    self.cards.append(card)
+                self.cards.append(card)
 
 
     def shuffle(self, seed=None):
-        # randomly shuffle deck, seed may dependent on time, but reproducible
         if seed is not None:
-            # shuffle with seed
             random.Random(seed).shuffle(self.cards)
         else:
-            # shuffle without seed
             random.shuffle(self.cards)
 
     def draw_card(self)->Card:
