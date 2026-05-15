@@ -5,7 +5,7 @@ from src.maumau import PlayerMauMau
 
 class GameBoard:
     def __init__(self, player_list: list[PlayerMauMau],
-                 double_deck: bool=False, big_deck: bool=False):
+                 big_deck: bool=False, double_deck: bool=False):
         # create player
         self.player_list = player_list
         self._curr_player_index = None
@@ -37,6 +37,7 @@ class GameBoard:
             player.hand.append(self.deck.draw_card())
         # deck is empty
         except IndexError:
+            # TODO: second IndexError would occur, if every card is currently used (except last card)
             self.refill_deck()
             player.hand.append(self.deck.draw_card())
             # alt. solution in deal_cards: i--, but could lead to infinite loop
@@ -52,6 +53,8 @@ class GameBoard:
         return self.used_cards[-1]
 
     def refill_deck(self):
+        if len(self.used_cards) <= 0:
+            raise ValueError("Deck not properly refilled, self.used_cards is empty")
         self.deck.add_card(card_list=self.used_cards[:-1])
         self.deck.shuffle()
         del self.used_cards[:-1]

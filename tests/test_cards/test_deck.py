@@ -1,7 +1,7 @@
 import unittest
 from src.cards.deck import Deck, Card, Rank, Suit
 
-class MyTestCase(unittest.TestCase):
+class TestDeck(unittest.TestCase):
     def test_constructor(self):
         deck1 = Deck(False, True)
         deck2 = Deck(True, False)

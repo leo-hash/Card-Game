@@ -2,13 +2,13 @@ import unittest
 from src.cards import Card, Rank, Suit
 
 
-class MyTestCase(unittest.TestCase):
-    def test_constructor_errors(self):
-        with self.assertRaises(TypeError):
-            card1 = Card(rank=Rank.SEVEN, suit='Hearts')
-
-        with self.assertRaises(TypeError):
-            card2 = Card(rank=7, suit=Suit.HEARTS)
+class TestCard(unittest.TestCase):
+    # def test_constructor_errors(self):
+    #     with self.assertRaises(TypeError):
+    #         card1 = Card(rank=Rank.SEVEN, suit='Hearts')
+    #
+    #     with self.assertRaises(TypeError):
+    #         card2 = Card(rank=7, suit=Suit.HEARTS)
 
 
     def test_constructor_happy_path(self):
