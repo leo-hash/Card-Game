@@ -1,7 +1,7 @@
 import unittest
 
 
-class MyTestCase(unittest.TestCase):
+class TestGameEngine(unittest.TestCase):
     def test_something(self):
         raise NotImplementedError
 

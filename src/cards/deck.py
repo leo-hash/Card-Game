@@ -13,6 +13,7 @@ class Deck:
         self.big_deck = big_deck
         self.double_deck = double_deck
 
+    # TODO: private method and called in Constructor ?
     def create_new_deck(self):
         # create card deck depending on parameters(small/big deck, double deck, ...)
         # inheritance vs. parametrisation
