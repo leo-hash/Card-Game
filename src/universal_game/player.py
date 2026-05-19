@@ -29,3 +29,9 @@ class Player:
             self.hand.append(card)
         else:
             self.hand.extend(card_list)
+
+    def __str__(self):
+        return f"Player {self.name}"
+
+    def __repr__(self):
+        return f"Player {self.name}"

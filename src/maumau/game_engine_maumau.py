@@ -14,7 +14,6 @@ class GameEngine:
         self.gameboard = self._create_board(config.board, self.players)
         self._setup_game()
 
-
     @staticmethod
     def _create_board(board_config: GameboardConfig, player_list: list[PlayerMauMau]) -> GameBoard:
         return GameBoard(
@@ -32,7 +31,7 @@ class GameEngine:
             agent_list.update({p.name: p.agent})
         return player_list, agent_list
 
-    def _setup_game(self, start_player_index: int=None, card_count: int = 6):
+    def _setup_game(self, start_player_index: int = None, card_count: int = 6):
         if start_player_index is None:
             self.gameboard.curr_player = random.choice(self.players)
         else:
@@ -48,13 +47,14 @@ class GameEngine:
 
     def _apply_card_effect(self, card: Card):
         # 7: draw two, without multiple 7 in a row
+        # TODO: multiple 7 in a row
         if card.rank is Rank.SEVEN:
-            print(f"Player {self.gameboard.next_player().name} has to draw 2 cards")
-            self.gameboard.deal_cards(2, self.gameboard.next_player())
+            print(f"Player {self.gameboard.next_player.name} has to draw 2 cards")
+            self.gameboard.deal_cards(2, self.gameboard.next_player)
 
         # 8: suspend next player
         if card.rank is Rank.EIGHT:
-            print(f"Player {self.gameboard.next_player().name} is suspended for this round")
+            print(f"Player {self.gameboard.next_player.name} is suspended for this round")
             self.gameboard.move_to_next_player()
 
         # Jack: choose a color
@@ -63,33 +63,47 @@ class GameEngine:
             pass
 
     def play_turn(self):
-        cur_agent = self.agents[self.gameboard.curr_player.name]
-        card_to_play = cur_agent.choose_card(self.gameboard)
+        current_player = self.gameboard.curr_player
+        current_agent = self.agents[current_player.name]
 
-        # if card_to_play == null, then draw a card
+        card_to_play = current_agent.choose_card(self.gameboard)
+
         if card_to_play is None:
-            print(f"Player {self.gameboard.curr_player.name} has to draw a card")
-            self.gameboard.deal_cards(1, self.gameboard.curr_player)
-        else:
-            # if card_to_play legal move, play
-            top_card = self.gameboard.show_last_card()
-            if (card_to_play.suit == top_card.suit or
-                    card_to_play.rank == top_card.rank):
-                print(f"Player {self.gameboard.curr_player.name} played {card_to_play}")
+            self._draw_card(current_player)
+            return
 
-                self.gameboard.play_card(card_to_play)
-                self._apply_card_effect(card_to_play)
-                if self.gameboard.check_player_wins():
-                    self.end_game()
-                self.gameboard.move_to_next_player()
+        if not self._is_legal_move(card_to_play):
+            print(f"Player {current_player.name} made illegal move, try again")
+            self.play_turn()
+            return
 
-            else:
-                # illegal move
-                print(f"Player {self.gameboard.curr_player.name} made illegal move, try again")
-                self.play_turn()
+        self._play_card(current_player, card_to_play)
 
+    def _play_card(self, player, card):
+        print(f"Player {player.name} played {card}")
+
+        self.gameboard.play_card(card)
+        self._apply_card_effect(card)
+
+        if self.gameboard.check_player_wins():
+            print(f"Player {player.name} won")
+            self.gameboard.remove_current_player()
+
+        if self.gameboard.check_game_over():
+            print(f"Game over")
+            self.end_game()
+
+        self.gameboard.move_to_next_player()
+
+    def _draw_card(self, player):
+        print(f"Player {player.name} has to draw a card")
+        self.gameboard.deal_cards(1, player)
+
+    def _is_legal_move(self, card):
+        top_card = self.gameboard.last_played_card
+
+        return (card.suit == top_card.suit or
+                card.rank == top_card.rank)
 
     def end_game(self):
         exit()
-
-
