@@ -1,6 +1,6 @@
-from src.maumau.agent_ki_random import AgentKiRandom
-from src.maumau.game_config import GameConfig, GameboardConfig, PlayerConfig
-from src.maumau.game_engine_maumau import GameEngine
+from src.mycardgame.maumau import AgentKiRandom
+from src.mycardgame.maumau.game_config import GameConfig, GameboardConfig, PlayerConfig
+from src.mycardgame.maumau import GameEngine
 
 if __name__ == '__main__':
     game_config = GameConfig(
@@ -12,6 +12,7 @@ if __name__ == '__main__':
     )
 
     game_engine = GameEngine(game_config)
+    game_engine.setup_game()
 
     game_round = 1
     while True:

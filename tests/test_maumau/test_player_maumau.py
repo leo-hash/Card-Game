@@ -2,8 +2,7 @@ import unittest
 
 
 class TestPlayerMauMau(unittest.TestCase):
-    def test_something(self):
-        raise NotImplementedError
+    pass
 
 
 if __name__ == '__main__':

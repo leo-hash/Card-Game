@@ -1,6 +1,6 @@
-from .rank import Rank
-from .suit import Suit
-from .card import Card
+from mycardgame.cards.suit import Suit
+from mycardgame.cards.rank import Rank
+from mycardgame.cards.card import Card
 
 import random
 

@@ -1,6 +1,6 @@
-from src.cards import Deck
-from src.cards import Card
-from src.maumau import PlayerMauMau
+from mycardgame.cards import Deck
+from mycardgame.cards import Card
+from mycardgame.maumau import PlayerMauMau
 
 
 class GameBoard:

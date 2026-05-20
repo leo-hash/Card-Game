@@ -1,5 +1,5 @@
 import unittest
-from src.cards.deck import Deck, Card, Rank, Suit
+from mycardgame.cards import Deck, Card, Rank, Suit
 
 class TestDeck(unittest.TestCase):
     def test_constructor(self):

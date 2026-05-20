@@ -1,8 +1,7 @@
+from mycardgame.maumau.agent import Agent
+
 from dataclasses import dataclass
 from typing import Optional
-
-from src.maumau.agent import Agent
-
 
 @dataclass
 class PlayerConfig:

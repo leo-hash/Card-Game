@@ -1,7 +1,7 @@
 import unittest
 
-from src.cards import Deck
-from src.universal_game import Player
+from src.mycardgame.cards import Deck
+from src.mycardgame.universal_game import Player
 
 
 class TestPlayer(unittest.TestCase):

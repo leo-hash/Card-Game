@@ -1,6 +1,6 @@
 import unittest
-from test_card import TestCard
-from test_deck import TestDeck
+from .test_card import TestCard
+from .test_deck import TestDeck
 
 def suite() -> unittest.TestSuite:
     loader = unittest.TestLoader()

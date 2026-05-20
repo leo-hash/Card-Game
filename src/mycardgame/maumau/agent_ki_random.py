@@ -1,10 +1,9 @@
-import random
-from typing import Any
+from mycardgame.cards import Card
+from mycardgame.maumau import GameBoard
+from mycardgame.maumau.agent import Agent
 
+import random
 from typing_extensions import override
-from src.cards import Card
-from src.maumau import GameBoard
-from src.maumau.agent import Agent
 
 
 class AgentKiRandom(Agent):

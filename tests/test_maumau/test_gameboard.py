@@ -1,7 +1,7 @@
 import unittest
 
-from src.cards import Deck, Card
-from src.maumau import PlayerMauMau, GameBoard
+from mycardgame.cards import Deck, Card
+from mycardgame.maumau import PlayerMauMau, GameBoard
 
 
 class TestGameboard(unittest.TestCase):
@@ -55,6 +55,8 @@ class TestGameboard(unittest.TestCase):
             except IndexError:
                 self.assertTrue(False, f"Deck not properly refilled after {i} cards picked")
         self.assertEqual(len(self.player_list[0].hand), 32)
+        # TODO: weird error:
+        # self.gameboard1.play_card(self.player_list[0].hand[0])
 
     def test_last_card_and_play_card(self):
         # maybe a bit lazy but setup_last_card, last_played_card and play_card are oneliners
@@ -62,7 +64,7 @@ class TestGameboard(unittest.TestCase):
         self.gameboard1.deal_cards(5)
 
         self.gameboard1.setup_last_card()
-        self.assertTrue(isinstance(self.gameboard1.last_played_card, Card))
+        self.assertIsInstance(self.gameboard1.last_played_card, Card)
 
         for i in range(5):
             last_card = self.player_list[0].hand[0]
@@ -122,6 +124,12 @@ class TestGameboard(unittest.TestCase):
 
         self.gameboard1.curr_player = self.player_list[2]
         self.assertEqual(self.gameboard1.curr_player, self.player_list[2])
+
+    def test_play_card(self):
+        self.gameboard1.deal_cards()
+        card = self.player_list[0].hand[0]
+        self.gameboard1.play_card(self.player_list[0].hand[0])
+        self.assertEqual(self.gameboard1.last_played_card, card)
 
 if __name__ == '__main__':
     unittest.main()

@@ -13,6 +13,5 @@ def suite():
     return main_suite
 
 if __name__ == "__main__":
-    # TODO: fix path problem
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(suite())

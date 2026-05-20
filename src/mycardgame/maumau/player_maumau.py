@@ -1,6 +1,5 @@
-# from src.maumau.agent import Agent
-from src.universal_game import Player
-from src.cards import Card
+from mycardgame.universal_game import Player
+from mycardgame.cards import Card
 
 class PlayerMauMau(Player):
 

@@ -1,8 +1,8 @@
 import unittest
-from test_gameboard import TestGameboard
-from test_player_maumau import TestPlayerMauMau
-from test_agent_ki_random import TestAgentKiRandom
-from test_game_engine_maumau import TestGameEngine
+from .test_gameboard import TestGameboard
+from .test_player_maumau import TestPlayerMauMau
+from .test_agent_ki_random import TestAgentKiRandom
+from .test_game_engine_maumau import TestGameEngine
 
 def suite() -> unittest.TestSuite:
     loader = unittest.TestLoader()

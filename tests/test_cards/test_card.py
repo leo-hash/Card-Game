@@ -1,5 +1,5 @@
 import unittest
-from src.cards import Card, Rank, Suit
+from src.mycardgame.cards import Card, Rank, Suit
 
 
 class TestCard(unittest.TestCase):

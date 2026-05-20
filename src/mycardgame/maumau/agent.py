@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from src.cards import Card
-from src.maumau import GameBoard
+from mycardgame.cards import Card
+from mycardgame.maumau import GameBoard
 
 
 class Agent(ABC):

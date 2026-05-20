@@ -1,4 +1,4 @@
-from src.cards import Card
+from src.mycardgame.cards import Card
 
 
 

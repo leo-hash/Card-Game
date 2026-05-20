@@ -1,5 +1,6 @@
-from .suit import Suit
-from .rank import Rank
+from mycardgame.cards.suit import Suit
+from mycardgame.cards.rank import Rank
+
 from dataclasses import dataclass
 
 @dataclass
