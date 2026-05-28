@@ -1,1 +1,3 @@
+coverage==7.14.0
+-e git+https://github.com/leo-hash/Card-Game.git@3b6cabd72711023f572d95e5d9f40181cd40b8d5#egg=myapp
 typing_extensions==4.15.0

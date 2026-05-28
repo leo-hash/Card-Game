@@ -7,5 +7,4 @@ class PlayerMauMau(Player):
         super().__init__(name, hand)
         self.won = False
 
-    def maumau(self):
-        self.won = True
+

@@ -49,10 +49,14 @@ class TestGameEngine(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.engine1.setup_game(start_player_index=3)
 
-    def play_turn(self):
+    def test_play_turn(self):
         # draw, legal move, player_wins, game over
         # card effects: 7, 8
-        pass
+        # self.engine1.setup_game(card_count=1)
+        #
+        # self.engine1.play_turn()
+        # self.assertEqual(len(self.engine1.players[0].hand), 1)
+        raise NotImplementedError
 
 
 
